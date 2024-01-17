@@ -6,7 +6,8 @@ namespace ClientRegistryAPI.Data
 {
     public class UsersMongoDbContext
     {
-        public IMongoCollection<CachedUser> usersCollection { get; private set; }
+        public IMongoCollection<CachedUser> UsersCollection { get; private set; }
+        public IMongoCollection<User> FailedEmailCollection { get; private set; }
 
 
         public UsersMongoDbContext(IOptions<MongoDBSettings> mongoDBSettings)
@@ -17,7 +18,8 @@ namespace ClientRegistryAPI.Data
             }
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI.ToString());
             IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
-            usersCollection = database.GetCollection<CachedUser>(mongoDBSettings.Value.CollectionName);
+            UsersCollection = database.GetCollection<CachedUser>(mongoDBSettings.Value.UserCollectionName);
+            FailedEmailCollection = database.GetCollection<User>(mongoDBSettings.Value.FailedEmailCollectionName);
         }
     }
 }

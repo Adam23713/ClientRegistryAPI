@@ -11,7 +11,7 @@ namespace ClientRegistryAPI.ServicesInstallers
             {
                 throw new ArgumentNullException(nameof(configuration));
             }
-            services.Configure<MongoDBSettings>(configuration.GetSection("MongoDB"));
+            services.Configure<MongoDBSettings>(configuration.GetSection("LocalMongoDB"/*"MongoDB"*/));
             services.AddSingleton<UsersMongoDbContext>();
             services.AddScoped<ICacheRepository, MongoDBUserRepository>();
         }

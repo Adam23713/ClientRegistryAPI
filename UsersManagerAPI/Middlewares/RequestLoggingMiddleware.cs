@@ -13,12 +13,12 @@ namespace ClientRegistryAPI.Middlewares
     public class RequestLoggingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<RequestLoggingMiddleware> _logger;
+        private readonly ILogger<RequestLoggingMiddleware> logger;
 
         public RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
            
         }
 
@@ -51,7 +51,7 @@ namespace ClientRegistryAPI.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex.StackTrace);
+                logger.LogError(ex.Message, ex.StackTrace);
                 throw;
             }
         }

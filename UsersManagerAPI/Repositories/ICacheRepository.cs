@@ -4,6 +4,16 @@ namespace ClientRegistryAPI.Repositories
 {
     public interface ICacheRepository
     {
+        #region Email
+        void SaveFailedNotificedUser(User user);
+
+        IEnumerable<User> GetFailedNotificedUsers();
+
+        void DeleteFailedNotificedUser(User user);
+
+        #endregion
+
+        #region CacheUser
         Task<bool> IsUserNameOrEmailUsed(string userName, string email);
 
         Task<CachedUser?> GetUserByUserNameAndEmail(string userName, string email);
@@ -19,5 +29,7 @@ namespace ClientRegistryAPI.Repositories
         Task<CachedUser?> DeleteUserAsync(string id);
 
         Task<CachedUser?> UpdateUserAsync(string id, CachedUser user);
+
+        #endregion
     }
 }

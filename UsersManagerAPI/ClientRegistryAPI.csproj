@@ -11,7 +11,7 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>6.0-all</AnalysisLevel>
+    <AnalysisLevel>6.0-recommended</AnalysisLevel>
     <AnalysisMode>latest-Recommended</AnalysisMode>
     <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
@@ -47,14 +47,6 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.12" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <EditorConfigFiles Remove="C:\Users\kerte\source\repos\UsersManagerAPI\UsersManagerAPI\.editorconfig" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="C:\Users\kerte\source\repos\UsersManagerAPI\UsersManagerAPI\.editorconfig" />
   </ItemGroup>
 
 </Project>
