@@ -1,4 +1,4 @@
-# Users Manager API
+# Client Registry API
 
 This project is a web API designed to handle user management, allowing you to efficiently retrieve and manage a list of users. The supported actions include:
 
