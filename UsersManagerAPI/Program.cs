@@ -20,7 +20,6 @@ Select(Activator.CreateInstance).Cast<IServiceInstaller>().ToList();
 //Add services
 servicesInstallers.ForEach(installer => installer.InstallServices(builder.Services, builder.Configuration));
 
-
 var app = builder.Build();
 
 app.UseMiddleware<RequestLoggingMiddleware>();

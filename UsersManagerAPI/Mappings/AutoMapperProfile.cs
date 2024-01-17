@@ -10,7 +10,10 @@ namespace ClientRegistryAPI.Mappings
         public AutoMapperProfile()
         {
             CreateMap<UserDTO, User>().ReverseMap();
+            CreateMap<UserDTO, CachedUser>().ReverseMap();
+            CreateMap<CachedUserDTO, CachedUser>().ReverseMap();
             CreateMap<AddUserRequest, User>().ReverseMap();
+            CreateMap<AddUserRequest, CachedUser>().ReverseMap();
             CreateMap<UpdateUserRequest, User>().ReverseMap();
         }
     }

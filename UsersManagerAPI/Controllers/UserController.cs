@@ -18,12 +18,14 @@ namespace ClientRegistryAPI.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository userRepository;
+        private readonly ICacheRepository cachedUserRepository;
         private readonly IMapper mapper;
 
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        public UserController(IUserRepository userRepository, IMapper mapper, ICacheRepository cachedUserRepository)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
+            this.cachedUserRepository = cachedUserRepository;
         }
 
         /// <summary>
@@ -112,6 +114,46 @@ namespace ClientRegistryAPI.Controllers
             return CreatedAtAction(nameof(GetUserById), new { id = savedUserDto.Id }, savedUserDto);
         }
 
+        /// <summary>
+        /// Create a user in the cache. Later will be save and activate it
+        /// </summary>
+        /// <response code="200">Success</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="409">User already exists</response>
+        [HttpPost("AddUserLater")]
+        [ProducesResponseType(typeof(CachedUserDTO), 200)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
+        [ProducesResponseType(typeof(ErrorResponse), 409)]
+        [ServiceFilter(typeof(ValidationFilter))]
+        public async Task<IActionResult> AddUserLater([FromBody] AddUserRequest addUserRequest)
+        {
+            // Convert DTO to Domain Modell
+            var newUsers = mapper.Map<CachedUser>(addUserRequest);
+
+            var userInCache = await cachedUserRepository.IsUserNameOrEmailUsed(newUsers.Name, newUsers.Email);
+            var userInDb = await userRepository.IsUserNameOrEmailUsed(newUsers.Name, newUsers.Email);
+            if (userInCache)
+            {
+                return Conflict(new ErrorResponse("", "User already exists but not activated yet"));
+            }
+            
+            if (userInDb)
+            {
+                return Conflict(new ErrorResponse("", "User already exists"));
+            }
+
+            var savedUser = await cachedUserRepository.AddUserAsync(newUsers);
+            if (savedUser == null)
+            {
+                return BadRequest(new ErrorResponse("", "Unable to create user"));
+            }
+
+            // Convert back to DTO
+            var savedUserDto = mapper.Map<CachedUserDTO>(savedUser);
+
+            // Return created http code and show saved user
+            return Ok(savedUserDto);
+        }
 
         /// <summary>
         /// Update the user in the system
