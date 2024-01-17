@@ -3,6 +3,7 @@
 This project is a web API designed to handle user management, allowing you to efficiently retrieve and manage a list of users. The supported actions include:
 
 - **Create**: Add a new user to the system.
+- **Add User Later**: Add a new user to the cache and later save it to the Microsoft SQL database and then send email to user
 - **Update**: Modify existing user information.
 - **Delete**: Remove a user from the system.
 - **List**: Retrieve a list of all users.
@@ -10,29 +11,23 @@ This project is a web API designed to handle user management, allowing you to ef
 
 ## Technology Stack
 
-- **Database**: MongoDB
+- **Database**: MongoDB and Microsoft SQL
 - **Web API Framework**: C#, .Net Core 6, Swagger, OpenAPI
-- **Test Framework**: xUnit with .Net Core 6
 
 ## Usage
 
 To interact with the Users Manager API, you can utilize the following endpoints or use Swagger (the API self-documented):
 
-- **Create User**: `POST /users`
-- **Update User**: `PUT /users/{id}`
-- **Delete User**: `DELETE /users/{id}`
-- **List Users**: `GET /users`
-- **Get User by ID**: `GET /users/{id}`
+- **Create User**: `POST /user`
+- **Add User Later**  `POST /user/adduserlater`
+- **Update User**: `PUT /user/{id}`
+- **Delete User**: `DELETE /user/{id}`
+- **List Users**: `GET /user`
+- **Get User by ID**: `GET /user/{id}`
 
 ## Getting Started
 
 1. Clone this repository.
-2. Set up a MongoDB database to store user information.
-3. Configure the project to connect to your MongoDB instance.
+2. Set up a MongoDB (or use cloud mongodb) and Microsoft SQL database to store user information.
+3. Configure the project to connect to your MongoDB and Microsoft SQL instance.
 4. Run the application.
-
-## Test Data
-
-During development and testing, the [JSONPlaceholder users dataset](https://jsonplaceholder.typicode.com/users) was utilized to simulate real-world user scenarios.
-
-Feel free to explore the API and provide feedback or contributions. Thank you for using the Users Manager API!
